@@ -21,6 +21,6 @@ module.exports.Plugin = function(vk) {
     this.commands = [/пинг/i, /жив?/i, /ping/i];
     this.description = "проверить работоспособность бота";
     this.handler = (context => {
-        context.send(`${PREFIX}Пинг`);
+        context.send(`${PREFIX}Понг`);
     });
 }
