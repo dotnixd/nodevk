@@ -21,7 +21,6 @@ module.exports.Plugin = function(vk) {
     this.commands = [/кто/i];
     this.description = "выбрать случайного участника беседы";
     this.handler = (context => {
-        const { Request } = require("vk-io");
         vk.api.messages.getConversationMembers({
             peer_id: context.peerId
         }).then(function(user) {
