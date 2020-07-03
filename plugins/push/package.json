@@ -1,7 +1,7 @@
 {
-  "name": "nodevk-ping",
+  "name": "nodevk-push",
   "version": "1.0.0",
-  "description": "plugin for nodevk, send ping",
+  "description": "plugin for nodevk, mention all chat members",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
