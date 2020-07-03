@@ -31,6 +31,6 @@ module.exports.Plugin = function(vk) {
             context.reply(`${PREFIX}Ваша вайфу`, {
                 attachment: value                         
             });
-        }).catch(e => context.reply(`${PREFIX}Произошла ошибка\n${PREFIX}Возможное решение:\n - Выдайте админку боту`));
+        }).catch(e => context.reply(`${PREFIX}Ваша вайфу: https://thiswaifudoesnotexist.net/example-${fname}.jpg`));
     });
 }
