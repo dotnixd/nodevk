@@ -18,23 +18,19 @@
 
 module.exports.Plugin = function(vk) {
     this.vk = vk;
-    this.commands = [/кто/i];
-    this.description = "выбрать случайного участника беседы";
+    this.commands = [/вайфу/i];
+    this.description = "сгенерировать несуществующую вайфу";
     this.handler = (async context => {
-        vk.api.messages.getConversationMembers({
-            peer_id: context.peerId
-        }).then(function(user) {
-            var u = user.profiles[Math.floor(Math.random() * user.profiles.length)];
-
-            context.reply(`${PREFIX}Кто ${context.text.substr(context.text.indexOf(" ") + 1)}? Возможно это [id${u.id}|${u.first_name} ${u.last_name}]`, {
-                disable_mentions: true
+        var total = 100000;
+        var fname = Math.floor(Math.random() * total);
+        
+        var r = vk.upload.messagePhoto({
+            peer_id: context.peerId,
+            source: `https://www.thiswaifudoesnotexist.net/example-${fname}.jpg`
+        }).then(function(value) {
+            context.reply(`${PREFIX}Ваша вайфу`, {
+                attachment: value                         
             });
-        }).catch(e => {
-            if(e.code == 917) {
-                context.reply(`${PREFIX}Произошла ошибка: невозможно получить участников беседы\n${PREFIX}Решение:\n - Выдайте права администратора боту`);
-            } else {
-                context.reply(`${PREFIX}Произошла неизвестная ошибка:\n${e.toString()}`);
-            }
-        });
+        }).catch(e => context.reply(`${PREFIX}Произошла ошибка\n${PREFIX}Возможное решение:\n - Выдайте админку боту`));
     });
 }
