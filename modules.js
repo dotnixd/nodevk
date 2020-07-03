@@ -17,6 +17,7 @@
 // 3. This notice may not be removed or altered from any source distribution.
 
 var fs = require("fs")
+var { Config } = require("./config.js");
 
 module.exports.ModuleSystem = function(moduleDir, vk) {
     this.path = moduleDir;
@@ -31,6 +32,10 @@ module.exports.ModuleSystem = function(moduleDir, vk) {
             files.forEach(e => {
                 let { Plugin } = require(`${moduleDir}/${e}`);
                 let p = new Plugin(vk);
+
+                try {
+                    p.config = new Config(`${moduleDir}/${e}/plugin.ini`);
+                } catch(e) {}
 
                 if(p.daemon) return;
                 vk.updates.hear(p.commands, p.handler);
