@@ -21,6 +21,7 @@ var { Config } = require("./config.js");
 
 module.exports.ModuleSystem = function(moduleDir, vk) {
     this.path = moduleDir;
+    this.modules = [];
     this.load = function() {
         fs.readdir(moduleDir, function(err, files) {
             if(err) {
@@ -28,7 +29,7 @@ module.exports.ModuleSystem = function(moduleDir, vk) {
             }
 
             console.log(`${PREFIX}Found modules:`);
-
+            var msg = `${PREFIX}Список команд:\n`;
             files.forEach(e => {
                 let { Plugin } = require(`${moduleDir}/${e}`);
                 let p = new Plugin(vk);
@@ -38,6 +39,7 @@ module.exports.ModuleSystem = function(moduleDir, vk) {
                 } catch(e) {}
 
                 if(p.daemon) return;
+                msg += `- [${p.commands.toString()}] - ${p.description}\n`;
 
                 var regexps = []
                 p.commands.forEach(e => {
@@ -48,6 +50,8 @@ module.exports.ModuleSystem = function(moduleDir, vk) {
 
                 console.log(`${PREFIX}[${p.commands}] - ${p.description}`);
             });
-        })
+
+            vk.updates.hear(/help|хелп|помощь/i, async context => context.reply(msg));
+        });
     }
 }
