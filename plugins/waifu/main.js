@@ -18,7 +18,7 @@
 
 module.exports.Plugin = function(vk) {
     this.vk = vk;
-    this.commands = [/вайфу/i];
+    this.commands = ["вайфу"];
     this.description = "сгенерировать несуществующую вайфу";
     this.handler = (async context => {
         var total = 100000;

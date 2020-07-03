@@ -18,7 +18,7 @@
 
 module.exports.Plugin = function(vk) {
     this.vk = vk;
-    this.commands = [/пинг/i, /жив?/i, /ping/i];
+    this.commands = ["пинг", "жив?", "ping"];
     this.description = "проверить работоспособность бота";
     this.handler = (async context => context.reply(`${PREFIX}Понг`));
 }

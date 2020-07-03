@@ -18,7 +18,7 @@
 
 module.exports.Plugin = function(vk) {
     this.vk = vk;
-    this.commands = [/перевод/i, /переводчик/i, /переведи/i];
+    this.commands = ["перевод", "переводчик", "переведи"];
     this.description = "проверить работоспособность бота";
     this.handler = (async context => {
         var words = context.text.split(" ");

@@ -18,7 +18,7 @@
 
 module.exports.Plugin = function(vk) {
     this.vk = vk;
-    this.commands = [/выбери/i];
+    this.commands = ["выбери"];
     this.description = "выбрать случайное значение";
     this.handler = (async context => {
         var tokens = context.text.split(" ");

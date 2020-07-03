@@ -38,7 +38,13 @@ module.exports.ModuleSystem = function(moduleDir, vk) {
                 } catch(e) {}
 
                 if(p.daemon) return;
-                vk.updates.hear(p.commands, p.handler);
+
+                var regexps = []
+                p.commands.forEach(e => {
+                    regexps.push(new RegExp(e, "i"));
+                });
+
+                vk.updates.hear(regexps, p.handler);
 
                 console.log(`${PREFIX}[${p.commands}] - ${p.description}`);
             });

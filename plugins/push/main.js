@@ -18,7 +18,7 @@
 
 module.exports.Plugin = function(vk) {
     this.vk = vk;
-    this.commands = [/пуш/i];
+    this.commands = ["пуш", "объявление"];
     this.description = "упомянуть всех участников беседы";
     this.handler = (async context => {
         if(context.text.split(" ").length <= 1) return context.reply(`${PREFIX}Недостаточно аргументов`);
