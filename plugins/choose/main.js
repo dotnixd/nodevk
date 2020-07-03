@@ -18,26 +18,25 @@
 
 module.exports.Plugin = function(vk) {
     this.vk = vk;
-    this.commands = [/пуш/i];
-    this.description = "упомянуть всех участников беседы";
+    this.commands = [/выбери/i];
+    this.description = "выбрать случайное значение";
     this.handler = (async context => {
-        if(context.text.split(" ").length <= 1) return context.reply(`${PREFIX}Недостаточно аргументов`);
-        vk.api.messages.getConversationMembers({
-            peer_id: context.peerId
-        }).then(function(user) {
-            var suffix = "";
+        var tokens = context.text.split(" ");
+        tokens.shift();
+        if(!tokens.length) return context.reply(`${PREFIX}Недостаточно аргументов`);
+        var variants = [];
+        var word = "";
 
-            user.profiles.forEach(u => {
-                suffix += `[id${u.id}|&#7;]`;
-            });
-
-            context.reply(`${PREFIX}Объявление: ${context.text.substr(context.text.indexOf(" ") + 1)}${suffix}`);
-        }).catch(e => {
-            if(e.code == 917) {
-                context.reply(`${PREFIX}Произошла ошибка: невозможно получить участников беседы\n${PREFIX}Решение:\n - Выдайте права администратора боту`);
+        tokens.forEach(t => {
+            if(t == "или") {
+                variants.push(word);
+                word = "";
             } else {
-                context.reply(`${PREFIX}Произошла неизвестная ошибка:\n${e.toString()}`);
+                word += t + " ";
             }
         });
+
+        if(word) variants.push(word);
+        context.reply(`${PREFIX}Выбрано: ${variants[Math.floor(Math.random() * variants.length)]}`);;
     });
 }
