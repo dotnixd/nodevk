@@ -15,6 +15,8 @@ moddir = "./plugins"
 
 [bot]
 token = "<токен>"
+
+admins[] = <ваш айди>
 ```
 
 ## Запуск

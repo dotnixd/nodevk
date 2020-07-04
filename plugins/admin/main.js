@@ -16,21 +16,20 @@
 //   misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-const { VK } = require("vk-io");
+module.exports.Plugin = function(vk) {
+    this.vk = vk;
+    this.daemon = true;
+    vk.updates.hear(/евал|eval/i, async context => {
+        if(!this.admins.includes(context.senderId.toString())) return context.reply(`${PREFIX}Отказано в доступе`);
 
-console.log(":: Loading config");
-var { Config } = require("./config.js");
-var cfg = new Config("./config.ini");
+        var tok = context.text.split(" ");
+        tok.shift();
+        var arg = tok.join(" ");
 
-global.PREFIX = cfg.cfg.prefix;
-
-const vk = new VK({
-    token: cfg.cfg.bot.token
-});
-
-console.log(`${PREFIX}Loading modules`);
-var { ModuleSystem } = require("./modules.js");
-var mod = new ModuleSystem(cfg.cfg, vk);
-mod.load();
-
-vk.updates.start().catch(console.error);
+        try {
+            context.reply(`${PREFIX}Ответ: ${eval(arg)}`);
+        } catch(e) {
+            context.reply(`${PREFIX}Ошибка: ${e.toString()}`);
+        }
+    });
+}

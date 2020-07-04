@@ -19,24 +19,24 @@
 var fs = require("fs")
 var { Config } = require("./config.js");
 
-module.exports.ModuleSystem = function(moduleDir, vk) {
-    this.path = moduleDir;
-    this.modules = [];
+module.exports.ModuleSystem = function(cfg, vk) {
     this.load = function() {
-        fs.readdir(moduleDir, function(err, files) {
+        fs.readdir(cfg.moddir, function(err, files) {
             if(err) {
-                return console.log(`${PREFIX}Unable to scan directory "${moduleDir}": ${err}`);
+                return console.log(`${PREFIX}Unable to scan directory "${cfg.moddir}": ${err}`);
             }
 
             console.log(`${PREFIX}Found modules:`);
             var msg = `${PREFIX}Список команд:\n`;
             files.forEach(e => {
-                let { Plugin } = require(`${moduleDir}/${e}`);
+                let { Plugin } = require(`${cfg.moddir}/${e}`);
                 let p = new Plugin(vk);
 
                 try {
-                    p.config = new Config(`${moduleDir}/${e}/plugin.ini`);
+                    p.config = new Config(`${cfg.moddir}/${e}/plugin.ini`);
                 } catch(e) {}
+
+                p.admins = cfg.bot.admins;
 
                 if(p.daemon) return;
                 msg += `- [${p.commands.toString()}] - ${p.description}\n`;

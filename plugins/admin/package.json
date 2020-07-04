@@ -1,0 +1,11 @@
+{
+  "name": "nodevk-admin",
+  "version": "1.0.0",
+  "description": "plugin for nodevk, admin panel",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "OverPie",
+  "license": "Zlib"
+}
