@@ -43,7 +43,7 @@ module.exports.ModuleSystem = function(cfg, vk) {
 
                 var regexps = []
                 p.commands.forEach(e => {
-                    regexps.push(new RegExp(e, "i"));
+                    regexps.push(new RegExp(`^(\\W|\\S|)(${e})\\s?(.*)$`, "i"));
                 });
 
                 vk.updates.hear(regexps, p.handler);
