@@ -43,7 +43,7 @@ module.exports.ModuleSystem = function(cfg, vk) {
 
                 var regexps = []
                 p.commands.forEach(e => {
-                    regexps.push(new RegExp(`^(\\W|\\S|)(${e})\\s?(.*)$`, "i"));
+                    regexps.push(new RegExp(`^(\\W|\\S)(${e})\\s?(.*)$`, "i"));
                 });
 
                 vk.updates.hear(regexps, p.handler);
@@ -51,7 +51,7 @@ module.exports.ModuleSystem = function(cfg, vk) {
                 console.log(`${PREFIX}[${p.commands}] - ${p.description}`);
             });
 
-            vk.updates.hear(/help|хелп|помощь/i, async context => context.reply(msg));
+            vk.updates.hear(new RegExp(`^(\\W|\\S)(хелп|help)\\s?(.*)$`, "i"), async context => context.reply(msg));
         });
     }
 }
